@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Stack</title>
+</head>
+<style>
+   .tableTd {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: 1px solid #000;
+      width: 40px;
+      height: 40px;
+   }
+
+   .btn {
+      position: fixed;
+      top: 10px;
+      left: 230px;
+   }
+</style>
+
+<body>
+   <div class="wrapper" style="width:1000px;display: flex; justify-content: center; margin-top: 100px;">
+      <table style="display: flex; justify-content: center;  margin: 10px 0;">
+         <tbody>
+            <tr class="root" style="display: flex; flex-direction: column-reverse; font-size: 20px; font-weight: bold;">
+            </tr>
+         </tbody>
+      </table>
+   </div>
+   <div class="btn">
+      <input type="submit" name="sub" value="Delet" id='del'>
+   </div>
+   <script>
+
+      class Stack {
+         constructor() {
+            this.end = [];
+            this.size = 0;
+         }
+         push(value) {
+            if (this.end) {
+               this.end.push(value);
+               this.size++;
+            }
+            return value;
+         }
+         pop() {
+            if (this.size === 0) {
+               alert('Empty!!!');
+               return;
+            }
+            else {
+               this.end.pop();
+               this.size--;
+            }
+         }
+      }
+      const stack = new Stack();
+
+      document.addEventListener("DOMContentLoaded", foo);
+
+      function foo() {
+         const form = document.createElement('form');
+         const inp1 = document.createElement('input');
+         const inp2 = document.createElement('input');
+         form.style = `display:flex; justify-content : flex-end;  position:fixed; left:5px; top:10px;`;
+         inp1.type = 'number';
+         inp1.name = 'number';
+         inp2.type = 'submit';
+         inp2.value = 'Send';
+         document.body.append(form);
+         form.append(inp1, inp2);
+         form.addEventListener('submit', e => {
+            e.preventDefault();
+            const num = e.target.number.value;
+            const tableTr = document.querySelector('.root');
+            const td = document.createElement('td');
+            td.classList.add('tableTd');
+            td.style.backgroundColor = `
+            rgb(
+               ${Math.round(255 * Math.random())},
+               ${Math.round(255 * Math.random())},
+               ${Math.round(255 * Math.random())}
+               ) `
+            td.innerHTML = stack.push(num);
+            tableTr.append(td);
+            inp1.value = '';
+         })
+         const del = document.getElementById('del');
+         del.addEventListener('click', () => {
+            const td = document.querySelectorAll('.tableTd');
+            stack.pop();
+            td[td.length - 1].remove();
+         });
+      }
+      console.log(stack);
+
+   </script>
+
+</body>
+
+</html>
